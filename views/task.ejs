@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Flat Login Form 3.0</title>
+    <link rel="stylesheet" href="/stylesheets/reset.css">
+    <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <style>
+    .container {
+        background: #f2f2f2;
+    }
+    
+    input.ng-invalid {
+        border: 1px solid pink;
+    }
+    
+    input.ng-valid {
+        border: 1px solid lightgreen;
+    }
+    
+    button.button {
+        cursor: not-allowed;
+    }
+    
+    button.button:hover {
+        background: #33b5e5;
+    }
+    
+    th {
+        font-weight: bolder;
+        font-size: 22px;
+    }
+    
+    .active {
+        color: #ccc;
+        text-decoration: line-through;
+    }
+    
+    i.fa.fa-pencil {
+        font-size: 20px;
+    }
+    
+    i.fa.fa-times {
+        font-size: 20px;
+    }
+    
+    .addname,
+    .adddesc {
+        width: 40%;
+    }
+    
+    .addtask {
+        width: 15%;
+    }
+    /*table,tr,td{
+    border:1px solid blue;
+  }
+  table,tr{
+    max-width:100%;
+  }
+  td,th{
+    max-width:20%;
+  }*/
+    </style>
+</head>
+
+<body ng-controller="taskAddCtrl">
+    <!-- Form Module-->
+    <div class="container">
+        <button ng-click="logout()" class="btn btn-info pull-right" ng-class="">Logout</button>
+        <hr>
+        <div class="form">
+            <h2>Create a Todo List</h2>
+            <form name="frm" novalidate>
+                <input type="text" class="addname" ng-model="tname" placeholder="Task Name" required />
+                <input type="text" class="adddesc" ng-model="tdesc" placeholder="Task Description" required />
+                <button ng-click="taskAdd()" class="btn btn-primary addtask" ng-disabled="frm.$invalid" ng-class="{'button':frm.$invalid}">Add Task</button>
+            </form>
+            <hr>
+        </div>
+    </div>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th>Share</th>
+                    <th>Created by</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="taskiterate in tasklist ">
+                    <td ng-class="{'active':taskiterate.status}">
+                        <div ng-show="show">{{taskiterate.name}}</div>
+                        <div ng-hide="show">
+                            <input ng-model="taskiterate.name" type="text">
+                        </div>
+                    </td>
+                    <td ng-class="{'active':taskiterate.status}">
+                        <div ng-show="show">{{taskiterate.description}}</div>
+                        <div ng-hide="show">
+                            <input ng-model="taskiterate.description" type="text">
+                        </div>
+                    </td>
+                    <td>
+                        
+                            <input type="checkbox" ng-model="taskiterate.status" ng-click="status(taskiterate.uid,taskiterate.status);">
+                       
+                        
+                    </td>
+                    <td>
+                        <i ng-click="show=false;" ng-show="show" ng-hide="taskiterate.status" class="fa fa-pencil"></i>
+                        <i ng-click="show=true;taskEdit(taskiterate.uid,taskiterate.name,taskiterate.description)" ng-hide="show" class="fa fa-check"></i>
+                    </td>
+                    <td>
+                        <div ng-if="uuid==taskiterate.app_user_object_uid">
+                            <i ng-click="taskDelete(taskiterate.uid,$index)" class="fa fa-times"></i></td>
+                    <td><i ng-if="uuid==taskiterate.app_user_object_uid" ng-click="share(taskiterate.uid);sharetask=false" data-toggle="modal" data-target="#myModal" class="fa fa-share-alt" ></i>
+                        </div>
+                    </td>
+                    <td>
+                        
+                            <span ><b> {{taskiterate._owner.username}} </b></span>                       
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Share Task</h4>
+                </div>
+                <form name="frm2">
+                    <div class="modal-body">
+                    
+                        <select class="form-control" ng-model="selected" multiple required>
+                            <option value="">Select User</option>
+
+                            <option ng-repeat="user in userlist1" value={{user.uid}}>
+                            {{user.username}}</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" ng-click="refer(selected)" ng-disabled="frm2.$invalid" ng-class="{'button':frm2.$invalid}" class="btn btn-default">Share</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--  <script src='js/jquery.min.js'></script>
+    <script src='http://codepen.io/andytran/pen/vLmRVp.js'></script>
+    <script src="js/index.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src='/javascripts/angular.min.js'></script>
+	<script src='/javascripts/angular-cookies.min.js'></script>
+    <script src='/javascripts/controller.js'></script>
+</body>
+
+</html>

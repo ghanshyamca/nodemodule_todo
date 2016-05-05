@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+  <head>
+    <meta charset="UTF-8">
+    <title>Flat Login Form 3.0</title>
+    
+    
+    <link rel="stylesheet" href="/stylesheets/reset.css">
+
+    <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900|RobotoDraft:400,100,300,500,700,900'>
+<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+
+        <link rel="stylesheet" href="/stylesheets/style.css">
+
+    
+    <style>
+          input.ng-invalid {
+          border:1px solid pink;
+      }
+      input.ng-valid {
+          border:1px solid lightgreen;
+      }
+       button.button{
+            cursor: not-allowed;
+       }
+       button.button:hover{
+        background: #33b5e5;
+       }
+
+
+    </style>
+    
+  </head>
+
+  <body>
+
+    
+
+<div class="pen-title" >
+  <h1> Login Form</h1>
+</div>
+<!-- Form Module-->
+<div class="module form-module">
+  <div class="toggle"><i class="fa fa-times fa-pencil"></i>
+    <div class="tooltip">Click Me</div>
+  </div>
+  <div class="form" ng-controller="todoLogin">
+    <h2>Login to your account</h2>
+    <form  name="frm" novalidate>
+      <input type="email" ng-model="email"  placeholder="Username" required/>
+      <input type="password" ng-model="pass"  placeholder="Password" required/>
+      <button ng-click="onLogin()" ng-disabled="frm.$invalid" ng-class="{'button':frm.$invalid}">Login</button>
+    </form>
+  </div>
+  <div class="form" ng-controller="todoRegister">
+    <h2>Create an account</h2>
+    <form name="frm1" novalidate>
+      <input type="text" ng-model="uname" placeholder="Username" required/>
+      <input type="email" ng-model="email" placeholder="Email Address" required/>
+      <input type="password" ng-model="pass" placeholder="Password" required/>
+      <input type="password" ng-model="cpass" placeholder="Retype Password" required/>
+      <button ng-click="onSubmit()" ng-disabled="frm1.$invalid" ng-class="{'button':frm1.$invalid}">Register</button>
+    </form>
+  </div>
+  <div class="cta"><a href="/forgotpass">Forgot your password?</a></div>
+</div>
+    <script src='/javascripts/jquery.min.js'></script>
+<!-- <script src='http://codepen.io/andytran/pen/vLmRVp.js'></script> -->
+
+
+
+        <script src="/javascripts/demo.js"></script>
+<script src='/javascripts/angular.min.js'></script>
+<script src='/javascripts/angular-cookies.min.js'></script>
+
+    <script src='/javascripts/controller.js'></script>
+    
+    
+  </body>
+</html>
