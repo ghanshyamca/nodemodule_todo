@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var built = require('built.io');
-var builtApp = built.App('bltd37e74f70bdc2c76');
+var builtApp = built.App('bltd37e74fwe70bdc2wew');
 var user = builtApp.User();
 var request = require('request');
 var nodemailer = require("nodemailer");
@@ -87,8 +87,8 @@ router.post('/passreset/:emailid', function(req, res, next) {
             var options = {
                 url: 'https://api.built.io/v1/application/users/' + userUID + '/token',
                 headers: {
-                    application_api_key: 'bltd37e74f70bdc2c76',
-                    master_key: 'blt6a4918486b626a20'
+                    application_api_key: 'bltd3wewe7e74f70bdc2c76',
+                    master_key: 'blt6a4918486erwqb626a20'
                 }
             };
             request(options, function(err, res, body) {
@@ -103,7 +103,7 @@ router.post('/passreset/:emailid', function(req, res, next) {
         });
 })
 var sendMail = function(email, token) {
-    var transporter = nodemailer.createTransport('smtps://nobitabean%40gmail.com:nobita123@smtp.gmail.com');
+    var transporter = nodemailer.createTransport('smtps://nobitabean%40gmail.com:nobita1123@smtp.gmail.com');
 
     var mailOptions = {
         from: 'nobitabean@gmail.com', // sender address 
